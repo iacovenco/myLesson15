@@ -54,3 +54,33 @@ let myTwoElement = new DomElement(
 // Вызываем методы для создания элемента на странице
 myElement.createElement();
 myTwoElement.createElement();
+
+//lesson 16
+
+function First() {}
+
+// Метод hello в классе First
+First.prototype.hello = function () {
+  console.log("Привет я метод родителя!");
+};
+
+// Класс Second, наследующий от First
+function Second() {
+  First.call(this); // Вызываем конструктор родительского класса
+}
+
+// Наследование прототипа First в Second
+Second.prototype = Object.create(First.prototype);
+Second.prototype.constructor = Second;
+
+// Переопределяем метод hello в классе Second
+Second.prototype.hello = function () {
+  First.prototype.hello.call(this); // Вызоваем метод hello из родительского класса
+  console.log("А я наследуемый метод!");
+};
+
+// Создание объекта на основе класса Second
+var obj = new Second();
+
+// Вызоваем метод hello из класса Second
+obj.hello();
